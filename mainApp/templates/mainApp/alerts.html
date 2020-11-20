@@ -1,0 +1,66 @@
+{% extends 'mainApp/base.html' %}
+{% block content %}   
+<!-- Content -->
+<div class="page-header">
+    <h3><a href="{% url 'alerts' %}">Alertas</a></h3>
+</div>
+<div id='tollbar'>
+    <form method="GET">
+        {% csrf_token %}
+        <label for='searchbar'>
+            <img src='/static/admin/img/search.svg' alt='search'>
+        </label>
+        <input type='text' size=40 name='q' value='{{findpass}}' id='searchbar' autofocus>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+        <label><p>{{numreg}} alertas encontradas</p></label>
+    </form>
+</div>
+<div class="col-md-12 table-responsive ">
+    <table class="table-small table table-striped">
+        <thead>
+        <tr>
+            <th>ID Alerta</th>
+            <th>Titulo</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Fecha Alerta</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for alert in alerts %}
+            <tr>
+            <th scope="row">{{ alert.idAlert }}</th>
+            <td>{{ alert.titulo }}</td>
+            <td>{{ alert.descrip }}</td>
+            <td>{{ alert.estado }}</td>
+            <td>{{ alert.falta|date:'d/m/Y H:i:s' }}</td>
+            <td><a href="{% url 'alert_detail' pk=alert.idAlert %}"><span class="glyphicon glyphicon-ok"></span></a></td>
+            </tr>
+            {%empty%}
+                <tr><td style="font-size: small" colspan="6">No hay alertas con la búsqueda actual</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+     <div class="pagination">
+        <span class="step-links">
+            {% if alerts.has_previous %}
+                <a href="?page=1&q={{findpass}}">&laquo; first</a>
+                <a href="?page={{ alerts.previous_page_number }}&q={{findpass}}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ alerts.number }} of {{ alerts.paginator.num_pages }}.
+            </span>
+    
+            {% if alerts.has_next %}
+                <a href="?page={{ alerts.next_page_number }}&q={{findpass}}">next</a>
+                <a href="?page={{ alerts.paginator.num_pages }}&q={{findpass}}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+
+<!-- END Content -->
+{% endblock %}

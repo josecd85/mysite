@@ -1,0 +1,82 @@
+{% load static %}
+<html lang="es-es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" href="../../favicon.ico">
+        <link rel="canonical" href="https://getbootstrap.com/docs/3.4/examples/sticky-footer-navbar/">
+
+        <title>Admin mainApp</title>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+        <link rel="stylesheet" type="text/css" href="/static/admin/css/login.css">
+        <link rel="stylesheet" href="https://getbootstrap.com/docs/3.4/dist/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/mainApp.css' %}">
+    </head>
+    <body>
+
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Barra de navegación</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'home' %}">Mi App</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                    <li class="{{ home_page }}"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="dropdown {{ dropdown_page }}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menú <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                        <li><a href="{% url 'alerts' %}">Alertas</a></li>
+                        <li><a href="{% url 'load_file' %}">Cargar ficheros</a></li>
+                        <li><a href="#">Gráficos</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Mi usuario</li>
+                        <li><a href="{% url 'reset_pass' %}">Resetear contraseña</a></li>
+                        <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                    <li class="{{ examples_page }}"><a href="{% url 'examples' %}">Ejemplos html</a></li>
+                    </ul>
+                    <div class="base-login">
+                        {% if user.is_authenticated %}
+                        <p>Bienvenido, <strong>{{ user.username }}</strong>.<a href="{% url 'logout' %}">Cerrar sesión</a></p>
+                        {% endif %}
+                    </div>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <div class="container">
+            {% block content %}
+            {% endblock %}
+        <!-- END Container -->
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">Versión 1.0.0</p>
+            </div>
+        </footer>
+    
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+       
+        
+    </body>
+</html>

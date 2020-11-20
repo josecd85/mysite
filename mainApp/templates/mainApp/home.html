@@ -1,0 +1,75 @@
+{% extends 'mainApp/base.html' %}
+{% block content %}   
+<!-- Content -->
+{% if mensaje != None %}
+<ul class="messagelist">
+    <li class="success">
+        {{mensaje}}
+    </li>
+</ul>
+{% endif %}
+<div class="page-header">
+    <h2>Dashboard</h2>
+</div>
+<div class="col-md-12">
+    <table>
+        <tr>
+            <td><h3>Alertas Pendientes: {{num_registros}}</h3></td>
+            <!--<td style="line-height:62px"><a href="{% url 'alerts' %}">Ver todas las alertas</a></td>-->
+        </tr>
+    </table>
+</div>
+<div class="col-md-12 table-responsive">
+    <table class="table-small table table-striped">
+        <thead>
+        <tr>
+            <th>ID Alerta</th>
+            <th>Titulo</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Fecha Alerta</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for alert in alerts %}
+            <tr>
+            <th scope="row">{{ alert.idAlert }}</th>
+            <td>{{ alert.titulo }}</td>
+            <td>{{ alert.descrip }}</td>
+            <td>{{ alert.estado }}</td>
+            <td>{{ alert.falta|date:'d/m/Y H:i:s' }}</td>
+            <td><a href="{% url 'alert_detail' pk=alert.idAlert %}"><span class="glyphicon glyphicon-ok"></span></a></td>
+            </tr>
+            {%empty%}
+                <tr><td style="font-size: small" colspan="6">No hay alertas pendientes</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if alerts.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ alerts.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ alerts.number }} of {{ alerts.paginator.num_pages }}.
+            </span>
+    
+            {% if alerts.has_next %}
+                <a href="?page={{ alerts.next_page_number }}">next</a>
+                <a href="?page={{ alerts.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+<div id="container"></div>
+  <script src="https://code.highcharts.com/highcharts.src.js"></script>
+  <script>
+    Highcharts.chart('container', {{ chart|safe }});
+  </script>
+
+<!-- END Content -->
+{% endblock %}
