@@ -2,11 +2,11 @@
 {% block content %}   
 <!-- Content -->
 
-<div id="container"></div>
+<div id="container">
   <script src="https://code.highcharts.com/highcharts.src.js"></script>
   <script>
     Highcharts.chart('container', {{ chart|safe }});
   </script>
-
+</div>
 <!-- END Content -->
 {% endblock %}
